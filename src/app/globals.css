@@ -1,1 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import "tailwindcss";
+
+@theme {
+    --font-primary: "Bebas Neue", "sans-serif";
+    --shadow-3xl: 0 0 10px #033859;  
+    --color-primary: #033859;
+  }

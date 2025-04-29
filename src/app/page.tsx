@@ -1,4 +1,4 @@
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaArrowRight } from "react-icons/fa";
 
 export default function Home() {
   return (
@@ -53,11 +53,24 @@ export default function Home() {
 
           <button
             type="submit"
-            className=" bg-primary font-primary text-white text-4xl py-1 hover:shadow-3xl ease-in-out transition duration-300 cursor-pointer"
+            className=" bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer"
           >
             Login
           </button>
         </form>
+      </div>
+
+      {/* Sign Up Button */}
+      <div className=" p-2 absolute top-1/2 left-[calc(26%+1rem)] -translate-y-1/2 z-10 flex ">
+        {/* Logo Right Arrow */}
+        <div className=" p-8 bg-white rounded-full shadow-sign-up hover:shadow-primary/70 hover:shadow-lg ease-in-out transition duration-300 cursor-pointer">
+          <FaArrowRight className="text-primary text-3xl" />
+        </div>
+        {/* Text Sign Up */}
+        <div className=" mt-1 ml-5 text-white text-lg font-secondary ">
+          <p className=" ">Don&apos;t have an account?</p>
+          <h1 className=" text-6xl font-primary ">SIGN UP</h1>
+        </div>
       </div>
 
       {/* Login Background */}

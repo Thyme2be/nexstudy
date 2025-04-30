@@ -1,1 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
+
+@theme {
+    --font-primary: "Bebas Neue", "sans-serif";
+    --font-secondary: "Roboto Condensed", "sans-serif";
+    --shadow-button: 0 0 10px #033859;  
+    --shadow-sign-up: 0 2px 5px rgba(0, 0, 0, 0.50);  
+    --color-primary: #033859;
+  }

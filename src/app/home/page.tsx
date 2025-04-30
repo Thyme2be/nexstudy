@@ -1,11 +1,23 @@
+import DynamicCarousel from "@/app/components/DynamicCarousel";
 import Image from "next/image";
 import { CiSearch } from "react-icons/ci";
 
 export default function Page() {
+  const tutors = [
+    { name: "John Doe", subject: "Math" },
+    { name: "Paul Johnson", subject: "History" },
+    { name: "Paul Johnson", subject: "History" },
+    { name: "Jane Smith", subject: "Science" },
+    { name: "Emily Davis", subject: "English" },
+    { name: "Emily Davis", subject: "English" },
+    { name: "Jane Smith", subject: "Science" },
+    { name: "John Doe", subject: "Math" },
+  ];
+
   return (
-    <main className="w-screen h-screen bg-secondary p-5 flex ">
+    <main className="w-screen h-auto bg-secondary p-5 flex ">
       {/* Navbar on the left */}
-      <section className=" flex flex-col p-4 bg-white shadow-card h-full w-1/6 rounded-2xl text-primary font-primary tracking-wide">
+      <section className=" flex flex-col p-4 bg-white shadow-card h-auto w-1/6 rounded-2xl text-primary font-primary tracking-wide">
         <nav className=" flex flex-col items-center ">
           <div className="w-full h-10 flex justify-center gap-2">
             <Image
@@ -18,11 +30,11 @@ export default function Page() {
           </div>
 
           {/* logo */}
-          <div className="mt-10 flex flex-col gap-10">
+          <div className="mt-10 flex flex-col gap-16">
             <div>
               <Image
-                width={40}
-                height={40}
+                width={50}
+                height={50}
                 src="/home.png"
                 alt="home"
                 className="cursor-pointer hover:scale-150 ease-in-out duration-150"
@@ -30,8 +42,8 @@ export default function Page() {
             </div>
             <div>
               <Image
-                width={40}
-                height={40}
+                width={50}
+                height={50}
                 src="/chat.png"
                 alt="chat"
                 className="cursor-pointer hover:scale-150 ease-in-out duration-150"
@@ -39,8 +51,8 @@ export default function Page() {
             </div>
             <div>
               <Image
-                width={40}
-                height={40}
+                width={50}
+                height={50}
                 src="/add.png"
                 alt="add"
                 className="cursor-pointer hover:scale-150 ease-in-out duration-150"
@@ -48,8 +60,8 @@ export default function Page() {
             </div>
             <div>
               <Image
-                width={40}
-                height={40}
+                width={50}
+                height={50}
                 src="/setting.png"
                 alt="setting"
                 className="cursor-pointer hover:scale-150 ease-in-out duration-150"
@@ -125,10 +137,12 @@ export default function Page() {
           </div>
         </section>
 
-        <section className=" w-full h-full flex mt-2 gap-5 ">
+        <section className=" w-full h-auto flex mt-2 gap-5 ">
           {/* Tutor Zone */}
-          <div className=" bg-white flex-1/2 h-full rounded-2xl shadow-card ">
-            <div className=" flex justify-between w-full h-fit p-5 items-center ">
+          <div className=" bg-white flex-1/2 h-auto rounded-2xl shadow-card ">
+
+            {/* Matching Label and view all */}
+            <div className=" flex justify-between w-full h-fit mt-5 px-5 items-center ">
               <h1 className=" text-4xl text-primary font-primary  ">
                 TUTOR MATCHING
               </h1>
@@ -136,10 +150,24 @@ export default function Page() {
                 View All
               </a>
             </div>
+            <div className=" h-auto px-5 flex ">
+              <DynamicCarousel items={tutors} /> {/* Pass tutors data */}
+            </div>
+
+            {/* Tutor Label and view all */}
+            <div className=" mt-5 flex justify-between w-full h-fit px-5 items-center ">
+              <h1 className=" text-4xl text-primary font-primary ">TUTORS</h1>
+              <a href="#" className=" text-lg hover:underline ">
+                View All
+              </a>
+            </div>
+            <div className=" h-auto px-5 flex ">
+              <DynamicCarousel items={tutors} /> {/* Pass tutors data */}
+            </div>
           </div>
 
           {/* Apply */}
-          <aside className=" bg-white w-1/5 h-full shadow-card rounded-2xl gap-5 p-5 flex flex-col items-center ">
+          <aside className=" bg-white w-1/5 h-auto shadow-card rounded-2xl gap-5 p-5 flex flex-col justify-center items-center ">
             <div className=" rounded-2xl w-full h-48 bg-[url(../../public/becometutor.jpg)] bg-cover bg-bottom "></div>
             <h1 className=" font-secondary text-primary text-2xl text-center ">
               Ready to make a difference and earn at the same time? Become a

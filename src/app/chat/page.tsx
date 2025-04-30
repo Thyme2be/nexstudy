@@ -88,7 +88,7 @@ export default function Page() {
             name="text-to-sent"
             id="text-to-sent"
             placeholder="Type..."
-            className=" relative bg-blue-300 rounded-2xl w-full p-5 mt-5 resize-none text-xl "
+            className=" bg-blue-300 rounded-2xl w-full p-5 mt-5 resize-none text-xl "
           >
           </textarea>
           <IoSend className=" cursor-pointer hover:scale-125 duration-100 absolute bottom-10 right-8 text-2xl text-primary " />

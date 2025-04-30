@@ -6,6 +6,8 @@
     --font-primary: "Bebas Neue", "sans-serif";
     --font-secondary: "Roboto Condensed", "sans-serif";
     --shadow-button: 0 0 10px #033859;  
+    --shadow-card: 0 3px 5px rgba(0, 0, 0, 0.50);
     --shadow-sign-up: 0 2px 5px rgba(0, 0, 0, 0.50);  
     --color-primary: #033859;
+    --color-secondary: #E8F6FF;
   }

@@ -140,11 +140,16 @@ export default function Page() {
 
           {/* Apply */}
           <aside className=" bg-white w-1/5 h-full shadow-card rounded-2xl gap-5 p-5 flex flex-col items-center ">
-            <div className=" rounded-2xl w-full h-48 bg-[url(../../public/becometutor.jpg)] bg-cover bg-bottom ">
-            </div>
-            <h1 className=" font-secondary text-primary text-2xl text-center ">Ready to make a difference and earn at the same time? Become a tutor!</h1>
-            <button type="button" className=" px-12 py-3 bg-primary text-2xl text-white font-primary tracking-wider ">
-                CLICK HERE!
+            <div className=" rounded-2xl w-full h-48 bg-[url(../../public/becometutor.jpg)] bg-cover bg-bottom "></div>
+            <h1 className=" font-secondary text-primary text-2xl text-center ">
+              Ready to make a difference and earn at the same time? Become a
+              tutor!
+            </h1>
+            <button
+              type="button"
+              className=" cursor-pointer hover:shadow-button duration-150 ease-in-out px-12 py-3 bg-primary text-2xl text-white font-primary tracking-wider "
+            >
+              CLICK HERE!
             </button>
           </aside>
         </section>

@@ -87,7 +87,7 @@ export default function DynamicCarousel({ items }: DynamicCarouselProps) {
                 {visibleItems.map((tutor, index) => (
                   <div
                     key={index}
-                    className="bg-gray-100 p-4 rounded shadow-card text-center"
+                    className="bg-gray-100 p-4 rounded shadow-card text-center cursor-pointer hover:scale-105 duration-100 "
                   >
                     <Image
                       src={"https://picsum.photos/200/200"}

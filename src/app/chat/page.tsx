@@ -2,6 +2,7 @@ import Image from "next/image";
 import { IoSend } from "react-icons/io5";
 import { FaPhoneVolume } from "react-icons/fa6";
 import Navsidebar from "../components/NavSideBar";
+import { FaSmile } from "react-icons/fa";
 
 export default function Page() {
   return (
@@ -90,14 +91,16 @@ export default function Page() {
           </div>
 
           {/* Chat textarea */}
-
-          <textarea
-            name="text-to-sent"
-            id="text-to-sent"
-            placeholder="Type..."
-            className=" bg-blue-300 rounded-2xl w-full p-5 mt-5 resize-none text-xl "
-          ></textarea>
-          <IoSend className=" cursor-pointer hover:scale-125 duration-100 absolute bottom-10 right-8 text-2xl text-primary " />
+          <div>
+            <textarea
+              name="text-to-sent"
+              id="text-to-sent"
+              placeholder="Type..."
+              className=" bg-blue-300 rounded-2xl w-full p-5 mt-5 resize-none text-xl "
+            ></textarea>
+            <IoSend className=" cursor-pointer hover:scale-125 duration-100 absolute bottom-20 right-8 text-2xl text-primary " />
+            <FaSmile className=" cursor-pointer hover:scale-125 duration-100 absolute bottom-10 right-8 text-2xl text-yellow-400 " />
+          </div>
         </section>
       </section>
     </main>

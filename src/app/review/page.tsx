@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { FaCamera } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { useState } from "react";
 
@@ -27,8 +28,7 @@ export default function page() {
 
   const prevReview = () =>
     setIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
-  const nextReview = () =>
-    setIndex((prev) => (prev + 1) % reviews.length);
+  const nextReview = () => setIndex((prev) => (prev + 1) % reviews.length);
 
   return (
     <main className=" h-screen bg-blue-100 w-screen flex items-center justify-center p-4">
@@ -44,7 +44,9 @@ export default function page() {
               className="rounded-full"
             />
           </div>
-          <h1 className="text-lg font-bold text-center">LEONORA CELESTE HARTWELL</h1>
+          <h1 className="text-lg font-bold text-center">
+            LEONORA CELESTE HARTWELL
+          </h1>
           <p className="text-sm text-center">REVIEWS FROM EMPLOYERS (358)</p>
         </div>
 
@@ -58,23 +60,32 @@ export default function page() {
 
         {/* Review Carousel */}
         <div className="flex items-center justify-between space-x-2 mb-6">
-          <button onClick={prevReview} className="text-white text-xl">‹</button>
+          <button onClick={prevReview} className="text-white text-xl">
+            ‹
+          </button>
           <div className="flex-1 bg-white text-black rounded-lg p-4 shadow">
             <p className="text-sm mb-2">{reviews[index].text}</p>
-            <p className="text-yellow-500 font-semibold">⭐ {reviews[index].rating}.0</p>
+            <p className="text-yellow-500 font-semibold">
+              ⭐ {reviews[index].rating}.0
+            </p>
           </div>
-          <button onClick={nextReview} className="text-white text-xl">›</button>
+          <button onClick={nextReview} className="text-white text-xl">
+            ›
+          </button>
         </div>
 
         {/* Input Box */}
-        <div className="flex items-center bg-white rounded-full px-4 py-2">
+        <div className="flex items-center bg-white rounded-full px-4 py-2 gap-3">
           <input
             type="text"
             placeholder="Type..."
             className="flex-1 outline-none bg-transparent text-black"
           />
           <button>
-            <IoSend className=" text-primary cursor-pointer hover:scale-125 duration-100 ease-in-out " />
+            <FaCamera className=" text-primary cursor-pointer text-xl hover:scale-125 duration-100 ease-in-out " />
+          </button>
+          <button>
+            <IoSend className=" text-primary cursor-pointer text-xl hover:scale-125 duration-100 ease-in-out " />
           </button>
         </div>
       </div>

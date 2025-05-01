@@ -105,18 +105,6 @@ export default function Page() {
             />
           </div>
 
-          {/* Username Field */}
-          <div className="relative">
-            <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
-            <input
-              type="text"
-              placeholder="Username"
-              className="pl-10 pr-4 py-3 border-2 border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 w-full"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
 
           {/* Password Field */}
           <div className="relative">

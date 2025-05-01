@@ -1,6 +1,6 @@
 "use client";
 
-import { FaChevronDown } from "react-icons/fa"; // add this at the top
+import { FaChevronDown, FaArrowAltCircleRight } from "react-icons/fa"; // add this at the top
 import { useState } from "react";
 import Image from "next/image";
 
@@ -14,7 +14,7 @@ export default function Page() {
         {/* Sort Button */}
         <button
           onClick={() => setOpen(!open)}
-          className=" relative font-primary text-2xl tracking-wider cursor-pointer rounded-full bg-blue-600 hover:bg-blue-600/80 text-white px-16 py-2"
+          className=" relative font-primary text-2xl tracking-wider cursor-pointer rounded-full bg-[#53AEE6] hover:bg-[#5398e6] duration-100 ease-in-out text-white px-16 py-2"
         >
           ALL <FaChevronDown className=" text-lg absolute right-5 top-4 " />
         </button>
@@ -53,7 +53,8 @@ export default function Page() {
       </section>
 
       {/* Right */}
-      <section className=" bg-secondary rounded-2xl flex-1/2 h-auto mt-2 py-6 px-10">
+      <section className=" relative bg-secondary rounded-2xl flex-1/2 h-auto mt-2 py-6 px-10">
+      <FaArrowAltCircleRight className=" absolute right-0 top-0 text-primary text-4xl " />
         <div className=" w-full flex justify-center items-center">
           <Image
             src={"https://picsum.photos/200/200"}

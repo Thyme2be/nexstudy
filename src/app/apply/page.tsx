@@ -138,12 +138,15 @@ export default function page() {
             </div>
 
             {/* Apply Button */}
-            <div className=" flex justify-end mr-16 mt-12 ">
+            <div className=" flex justify-end m-2 mt-12 ">
               <button 
-                className="absolute cursor-pointer duration-200 hover:scale-115 ease-in-out bottom-3 right-5 bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
+                className=" cursor-pointer duration-200 hover:scale-115 ease-in-out bottom-3 right-5 bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
               >
                 Apply
               </button>
+            </div>
+            <div className=" m-2 text-end ">
+              <p>We are very glad that you have applied to be a tutor.</p>
             </div>
           </div>
         </div>

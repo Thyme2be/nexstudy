@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { IoSend } from "react-icons/io5";
+import { FaPhoneVolume } from "react-icons/fa6";
 import Navsidebar from "../components/NavSideBar";
 
 export default function Page() {
@@ -36,7 +37,8 @@ export default function Page() {
         {/* Right */}
         <section className=" relative flex-2/3 h-auto bg-white shadow-card rounded-2xl p-5 ">
           {/* Chat header */}
-          <div className=" h-20 w-full ">
+          <div className=" h-20 w-full flex justify-between items-center ">
+            {/* Profile */}
             <div className=" flex gap-5 items-center p-2 ">
               <div className=" cursor-pointer rounded-full overflow-hidden w-16 h-16 ring-2 ring-primary ring-offset-2 ">
                 <Image
@@ -47,6 +49,11 @@ export default function Page() {
                 />
               </div>
               <h1 className=" font-secondary text-xl">Test</h1>
+            </div>
+
+            {/* Phone Logo */}
+            <div>
+              <FaPhoneVolume className=" text-5xl text-primary cursor-pointer hover:scale-125 duration-100 ease-in-out " />
             </div>
           </div>
           <div className="border-t border-black my-5 " />
@@ -89,8 +96,7 @@ export default function Page() {
             id="text-to-sent"
             placeholder="Type..."
             className=" bg-blue-300 rounded-2xl w-full p-5 mt-5 resize-none text-xl "
-          >
-          </textarea>
+          ></textarea>
           <IoSend className=" cursor-pointer hover:scale-125 duration-100 absolute bottom-10 right-8 text-2xl text-primary " />
         </section>
       </section>

@@ -1,6 +1,7 @@
 import DynamicCarousel from "@/app/components/DynamicCarousel";
 import Image from "next/image";
 import { CiSearch } from "react-icons/ci";
+import { HiOutlineEnvelope } from "react-icons/hi2";
 
 export default function Page() {
   const tutors = [
@@ -97,14 +98,21 @@ export default function Page() {
             <CiSearch className=" text-primary absolute top-1/2 left-3 transform -translate-y-1/2 text-3xl" />
           </div>
 
-          {/* Profile */}
-          <div className=" cursor-pointer rounded-full overflow-hidden w-16 h-16 ring-2 ring-primary ring-offset-2 ">
-            <Image
-              src={"https://picsum.photos/200/200"}
-              alt="profile"
-              width={100}
-              height={100}
-            />
+          {/* Message */}
+          <div className=" flex items-center gap-5 ">
+            <div className=" text-primary text-5xl ">
+              <HiOutlineEnvelope />
+            </div>
+
+            {/* Profile */}
+            <div className=" cursor-pointer rounded-full overflow-hidden w-16 h-16 ring-2 ring-primary ring-offset-2 ">
+              <Image
+                src={"https://picsum.photos/200/200"}
+                alt="profile"
+                width={100}
+                height={100}
+              />
+            </div>
           </div>
         </header>
 
@@ -140,7 +148,6 @@ export default function Page() {
         <section className=" w-full h-auto flex mt-2 gap-5 ">
           {/* Tutor Zone */}
           <div className=" bg-white flex-1/2 h-auto rounded-2xl shadow-card ">
-
             {/* Matching Label and view all */}
             <div className=" flex justify-between w-full h-fit mt-5 px-5 items-center ">
               <h1 className=" text-4xl text-primary font-primary  ">

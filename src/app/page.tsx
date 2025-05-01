@@ -64,7 +64,7 @@ export default function Home() {
             type="submit"
             className=" bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer"
           >
-            Login
+            Log in
           </button>
         </form>
       </div>

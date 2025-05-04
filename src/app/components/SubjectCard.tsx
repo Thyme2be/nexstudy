@@ -3,17 +3,10 @@ import Image from "next/image";
 
 interface SubjectCardProps {
   subject: string;
-  // grade,
-  // tutoringFormat,
-  // via,
-  // preferredTimes,
-  // budget,
-  // numStudents,
-  // attachments,
-  // additionalNotes,
+  onEdit: () => void; // Add onEdit prop
 }
 
-export default function SubjectCard({ subject }: SubjectCardProps) {
+export default function SubjectCard({ subject, onEdit }: SubjectCardProps) {
   {
     return (
       <div className=" relative bg-blue-100 w-full h-full flex p-4 rounded-2xl mt-1">
@@ -30,7 +23,7 @@ export default function SubjectCard({ subject }: SubjectCardProps) {
               {subject}
             </h1>
           </div>
-          <BsPencilSquare className=" text-4xl cursor-pointer hover:scale-125 duration-100 ease-in-out" />
+          <BsPencilSquare onClick={onEdit} className=" text-4xl cursor-pointer hover:scale-125 duration-100 ease-in-out" />
         </div>
         <button className=" absolute right-4 bottom-4 cursor-pointer duration-200 hover:scale-115 ease-in-out bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline">
           CONFIRM

@@ -73,15 +73,53 @@ export const createRequest = [
 ];
 
 // Update a tutoring request by ID
-export const updateRequest = (req, res) => {
-  const request = tutoringData.find((r) => r.id === parseInt(req.params.id));
-  if (request) {
-    Object.assign(request, req.body);
-    res.json(request);
-  } else {
-    res.status(404).json({ message: "Request not found" });
-  }
-};
+export const updateRequest = [
+  upload.any(), // Middleware to handle multipart/form-data
+  (req, res) => {
+    const requestId = parseInt(req.params.id); // Get the ID from the URL
+    const request = tutoringData.find((r) => r.id === requestId); // Find the request by ID
+
+    if (request) {
+      // Update the request with new data
+      const {
+        subject,
+        grade,
+        tutoringFormat,
+        via,
+        preferredTimes,
+        budget,
+        numStudents,
+        additionalNotes,
+      } = req.body;
+
+      // Log the parsed data for debugging
+      console.log("Updated Form Data:", req.body);
+      console.log("Updated Files:", req.files);
+
+      // Update the fields
+      request.subject = subject || request.subject;
+      request.grade = grade || request.grade;
+      request.tutoringFormat = tutoringFormat || request.tutoringFormat;
+      request.via = via || request.via;
+      request.preferredTimes = preferredTimes || request.preferredTimes;
+      request.budget = budget || request.budget;
+      request.numStudents = numStudents || request.numStudents;
+      request.additionalNotes = additionalNotes || request.additionalNotes;
+
+      // Update attachments if new files are uploaded
+      if (req.files && req.files.length > 0) {
+        request.attachments = req.files;
+      }
+
+      res.status(200).json({
+        message: "Request updated successfully",
+        updatedRequest: request,
+      });
+    } else {
+      res.status(404).json({ message: "Request not found" });
+    }
+  },
+];
 
 // Delete a tutoring request by ID
 export const deleteRequest = (req, res) => {

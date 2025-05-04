@@ -8,14 +8,14 @@ export default function Page() {
   interface TutoringRequest {
     id: string;
     subject: string;
-    // grade?: string;
-    // tutoringFormat?: string;
-    // via?: string;
-    // preferredTimes?: string;
-    // budget?: string;
-    // numStudents?: string;
-    // attachments?: File[];
-    // additionalNotes?: string;
+    grade?: string;
+    tutoringFormat?: string;
+    via?: string;
+    preferredTimes?: string;
+    budget?: string;
+    numStudents?: string;
+    attachments?: File[];
+    additionalNotes?: string;
   }
 
   const [tutoringRequests, setTutoringRequests] = useState<TutoringRequest[]>(
@@ -30,6 +30,8 @@ export default function Page() {
   const [numStudents, setNumStudents] = useState("");
   const [attachments, setAttachments] = useState<File[]>([]);
   const [additionalNotes, setAdditionalNotes] = useState("");
+  const [isEditing, setIsEditing] = useState(false); // Track if editing
+  const [editingId, setEditingId] = useState<string | null>(null); // Track the ID being edited
 
   useEffect(() => {
     fetchData();
@@ -57,7 +59,21 @@ export default function Page() {
     }
   };
 
-  // Create
+  const handleEdit = (request: TutoringRequest) => {
+    // Populate the form with existing data
+    setSubject(request.subject);
+    setGrade(request.grade || "");
+    setTutoringFormat(request.tutoringFormat || "Online");
+    setVia(request.via || "");
+    setPreferredTimes(request.preferredTimes || "");
+    setBudget(request.budget || "");
+    setNumStudents(request.numStudents || "");
+    setAdditionalNotes(request.additionalNotes || "");
+    setAttachments([]); // Reset attachments for editing
+    setIsEditing(true); // Set editing mode
+    setEditingId(request.id); // Track the ID being edited
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -76,29 +92,52 @@ export default function Page() {
       formData.append(`attachments[${index}]`, file);
     });
 
-    // Send the formData to the server
     try {
-      const response = await fetch("http://localhost:5000/api/tutoring", {
-        method: "POST",
-        body: formData,
-      });
+      if (isEditing && editingId) {
+        // Send PUT request for editing
+        console.log("Editing ID:", editingId); // Debugging line
+        const response = await fetch(
+          `http://localhost:5000/api/tutoring/${editingId}`,
+          {
+            method: "PUT",
+            body: formData,
+          }
+        );
 
-      if (response.ok) {
-        alert("Form submitted successfully!");
-        // Reset the form
-        setSubject("");
-        setGrade("");
-        setTutoringFormat("Online");
-        setVia("");
-        setPreferredTimes("");
-        setBudget("");
-        setNumStudents("");
-        setAttachments([]);
-        setAdditionalNotes("");
+        if (response.ok) {
+          alert("Request updated successfully!");
+          setIsEditing(false); // Exit editing mode
+          setEditingId(null); // Clear editing ID
+        } else {
+          const errorText = await response.text();
+          console.error("Failed to update request:", response.status, errorText);
+        }
       } else {
-        const errorText = await response.text();
-        console.error("Failed to submit form:", response.status, errorText);
+        // Send POST request for creating
+        const response = await fetch("http://localhost:5000/api/tutoring", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          alert("Form submitted successfully!");
+        } else {
+          const errorText = await response.text();
+          console.error("Failed to submit form:", response.status, errorText);
+        }
       }
+
+      // Reset the form
+      setSubject("");
+      setGrade("");
+      setTutoringFormat("Online");
+      setVia("");
+      setPreferredTimes("");
+      setBudget("");
+      setNumStudents("");
+      setAttachments([]);
+      setAdditionalNotes("");
+      fetchData(); // Refresh the list
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -125,14 +164,7 @@ export default function Page() {
             <SubjectCard
               key={request.id}
               subject={request.subject}
-              // grade={request.grade}
-              // tutoringFormat={request.tutoringFormat}
-              // via={request.via}
-              // preferredTimes={request.preferredTimes}
-              // budget={request.budget}
-              // numStudents={request.numStudents}
-              // attachments={request.attachments}
-              // additionalNotes={request.additionalNotes}
+              onEdit={() => handleEdit(request)} // Pass the edit handler
             />
           ))}
         </section>
@@ -324,7 +356,7 @@ export default function Page() {
             type="submit"
             className=" cursor-pointer hover:scale-110 duration-150 ease-in-out self-center text-center bg-primary rounded-2xl font-primary text-2xl font-light text-white shadow-xs shadow-primary/80 py-1 tracking-wider mt-5 w-40 "
           >
-            POST
+            {isEditing ? "Edit" : "Post"}
           </button>
         </form>
       </section>

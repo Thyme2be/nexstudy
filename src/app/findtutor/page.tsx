@@ -1,4 +1,4 @@
-"use client"; // Add this line at the very top
+"use client";
 
 import Navsidebar from "../components/NavSideBar";
 import { useState, useEffect } from "react";
@@ -110,7 +110,11 @@ export default function Page() {
           setEditingId(null); // Clear editing ID
         } else {
           const errorText = await response.text();
-          console.error("Failed to update request:", response.status, errorText);
+          console.error(
+            "Failed to update request:",
+            response.status,
+            errorText
+          );
         }
       } else {
         // Send POST request for creating

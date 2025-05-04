@@ -1,10 +1,76 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import Navsidebar from "../components/NavSideBar";
+import ChatProfileCard from "../components/ChatProfileCard";
+import ChatHeader from "../components/ChatHeader";
+import ChatMessageSent from "../components/ChatMessageSent";
 import { IoSend } from "react-icons/io5";
 import { FaPhoneVolume } from "react-icons/fa6";
-import Navsidebar from "../components/NavSideBar";
 import { FaSmile } from "react-icons/fa";
 
 export default function Page() {
+  const [tutoringRequests, setTutoringRequests] = useState<TutoringRequest[]>(
+    []
+  );
+  const [selectedRequest, setSelectedRequest] =
+    useState<TutoringRequest | null>(null); // State for selected request
+
+  interface TutoringRequest {
+    id: string;
+    subject: string;
+    grade?: string;
+    tutoringFormat?: string;
+    via?: string;
+    preferredTimes?: string;
+    budget?: string;
+    numStudents?: string;
+    attachments?: File[];
+    additionalNotes?: string;
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/tutoring", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        setTutoringRequests(data);
+
+        // Set MA111 as the default selected request
+        const defaultRequest = data.find(
+          (request: TutoringRequest) => request.subject === "MA111"
+        );
+        if (defaultRequest) {
+          setSelectedRequest(defaultRequest);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleCardClick = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/tutoring/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setSelectedRequest(data); // Update the selected request
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <main className=" h-auto p-5 bg-secondary flex gap-3 ">
       <Navsidebar />
@@ -20,38 +86,22 @@ export default function Page() {
             <h1 className=" hover:underline cursor-pointer ">Tutor</h1>
           </div>
           {/* Profile */}
-          <div className=" pt-5 px-5 flex flex-col gap-5 ">
-            <div className=" flex gap-5 items-center cursor-pointer p-2 hover:bg-gray-400/40 hover:rounded-2xl duration-150 ">
-              <div className=" cursor-pointer rounded-full overflow-hidden w-16 h-16 ring-2 ring-primary ring-offset-2 ">
-                <Image
-                  src={"https://picsum.photos/200/200"}
-                  alt="profile"
-                  width={80}
-                  height={80}
-                />
-              </div>
-              <h1 className=" font-secondary text-xl">Test</h1>
-            </div>
-          </div>
+          {tutoringRequests.map((request) => (
+            <ChatProfileCard
+              key={request.id}
+              subject={request.subject}
+              onClick={() => handleCardClick(request.id)} // Pass the click handler
+            />
+          ))}
         </section>
 
-        {/* Right */}
+        {/* Chat Right */}
         <section className=" relative flex-2/3 h-auto bg-white shadow-card rounded-2xl p-5 ">
           {/* Chat header */}
           <div className=" h-20 w-full flex justify-between items-center ">
             {/* Profile */}
-            <div className=" flex gap-5 items-center p-2 ">
-              <div className=" cursor-pointer rounded-full overflow-hidden w-16 h-16 ring-2 ring-primary ring-offset-2 ">
-                <Image
-                  src={"https://picsum.photos/200/200"}
-                  alt="profile"
-                  width={80}
-                  height={80}
-                />
-              </div>
-              <h1 className=" font-secondary text-xl">Test</h1>
-            </div>
-
+            <ChatHeader subject={selectedRequest?.subject || ""} />{" "}
+            {/* Display selected subject */}
             {/* Phone Logo */}
             <div>
               <FaPhoneVolume className=" text-5xl text-primary cursor-pointer hover:scale-125 duration-100 ease-in-out " />
@@ -61,41 +111,27 @@ export default function Page() {
 
           {/* Chat Message Received */}
           <div className=" bg-gray-200 w-fit p-3 text-md rounded-3xl ">
-            <h2>Test received message</h2>
+            <h2>Hi There</h2>
           </div>
 
           {/* Chat Message Sent */}
-          <div className=" float-end bg-blue-300 max-w-1/2 p-5 text-md rounded-3xl flex flex-col gap-3 items-center ">
-            <h2 className=" text-center text-primary underline ">
-              Test status message
-            </h2>
-            <p>
-              Appointment date: Monday, April 23, 2025 <br />
-              Time: 10:00-11:00 <br />
-              Total tutoring time: 1 hour <br />
-              Tutoring via: Online (Zoom) <br />
-              Tutoring fee: 250 baht <br />
-              Number of students: 3-4 people <br />
-              File: L01,L02,L04 <br />
-              Note: -
-            </p>
-            <button className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer ">
-              Confirm
-            </button>
-            <button className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer ">
-              Review
-            </button>
-            <button className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer ">
-              Cancel
-            </button>
-          </div>
+          {selectedRequest && (
+            <ChatMessageSent
+              preferredTimes={selectedRequest.preferredTimes || ""}
+              tutoringFormat={selectedRequest.tutoringFormat || ""}
+              budget={selectedRequest.budget || ""}
+              numStudents={selectedRequest.numStudents || ""}
+              additionalNotes={selectedRequest.additionalNotes || ""}
+            />
+          )}
 
           {/* Chat textarea */}
-          <div>
+          <div className=" h-full ">
             <textarea
               name="text-to-sent"
               id="text-to-sent"
               placeholder="Type..."
+              spellCheck="false"
               className=" bg-blue-300 rounded-2xl w-full p-5 mt-5 resize-none text-xl "
             ></textarea>
             <IoSend className=" cursor-pointer hover:scale-125 duration-100 absolute bottom-20 right-8 text-2xl text-primary " />

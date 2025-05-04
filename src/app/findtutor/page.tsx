@@ -24,37 +24,40 @@ export default function Page() {
     <main className="w-screen h-auto bg-secondary flex p-4 gap-5">
       {/* Left */}
       <Navsidebar />
-      <div className="flex w-full">
+
+      {/* Middle and Right */}
+      <section className="flex w-full">
         {/* Middle */}
-        <div className="bg-white w-1/2 h-1/2 flex flex-col p-4 shadow-card rounded-2xl text-primary font-primary tracking-wide m-1 mb-1">
+        <section className="bg-white w-1/2 h-1/2 flex flex-col p-4 shadow-card rounded-2xl text-primary font-primary tracking-wide m-1 mb-1">
           <h1 className="text-primary font-primary font-bold text-4xl ">
             TUTORING LIST
           </h1>
-          {/* ??? */}
-          <p className="whitespace-nowrap overflow-hidden text-ellipsis">
-          </p>
           <p className="text-black font-primary font-bold text-lg ">
             Once you find a tutor you like, please enter their name and code.
           </p>
-          <div className="relative bg-blue-100 w-full h-full flex p-4 rounded-2xl gap-4 mt-1">
-            <div className=" h-60 w-60  flex gap-10  ">
-              <Image
-                src={"https://picsum.photos/200/200"}
-                alt="textbook"
-                width={400}
-                height={400}
-                className="h-auto w-full  "
-              />
-              <h1 className=" text-primary font-primary font-bold text-6xl mt-3 items-center">CN101</h1>
+
+          {/* Card */}
+          <div className=" relative bg-blue-100 w-full h-full flex p-4 rounded-2xl mt-1">
+            <div className=" flex w-full justify-between  ">
+              <div className=" h-full flex w-5/6 gap-10 ">
+                <Image
+                  src={"https://picsum.photos/200/200"}
+                  alt="textbook"
+                  width={200}
+                  height={200}
+                  className="h-auto w-1/2  "
+                />
+                <h1 className=" text-primary font-primary font-bold text-6xl mt-3 items-center">
+                  CN101
+                </h1>
+              </div>
+              <BsPencilSquare className=" text-4xl cursor-pointer hover:scale-125 duration-100 ease-in-out" />
             </div>
-            <button
-              className="absolute cursor-pointer duration-200 hover:scale-115 ease-in-out bottom-3 right-5 bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
-            >
+            <button className=" absolute right-4 bottom-4 cursor-pointer duration-200 hover:scale-115 ease-in-out bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline">
               CONFIRM
             </button>
-            <BsPencilSquare className=" text-4xl ml-auto cursor-pointer hover:scale-125 duration-100 ease-in-out" />
           </div>
-        </div>
+        </section>
 
         {/* Right */}
         <div className="bg-white w-1/2 h-auto rounded-2xl shadow-md p-6 ml-5 ">
@@ -152,12 +155,13 @@ export default function Page() {
               Preferred days and times for lessons*
             </label>
             <div>
-              <div className="mb-4 mt-2"> {/* เพิ่ม margin-bottom */}
+              <div className="mb-4 mt-2">
+                {" "}
+                {/* เพิ่ม margin-bottom */}
                 <input
                   type="datetime-local"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-
-
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
               </div>
             </div>
           </div>
@@ -241,7 +245,6 @@ export default function Page() {
             </div>
           </div>
           <div className="mb-6">
-
             {/* additional field */}
             <label
               htmlFor="additionalNotes"
@@ -260,13 +263,12 @@ export default function Page() {
 
             <div className=" w-full flex  justify-center mt-5  ">
               <button className=" cursor-pointer duration-200 hover:scale-115 ease-in-out  bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline">
-                POST</button>
+                POST
+              </button>
             </div>
-
-
           </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

@@ -5,8 +5,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Tutor {
-  name: string;
   subject: string;
+  numStudents: number;
 }
 
 interface DynamicCarouselProps {
@@ -95,8 +95,10 @@ export default function DynamicCarousel({ items }: DynamicCarouselProps) {
                       height={200}
                       alt="tutor image"
                     />
-                    <h2 className="mt-2 text-xl font-bold">{tutor.name}</h2>
-                    <p className="text-gray-600">{tutor.subject}</p>
+                    <h2 className="mt-2 text-xl font-bold">{tutor.subject}</h2>
+                    <p className="text-gray-600">
+                      Group of: {tutor.numStudents}
+                    </p>
                   </div>
                 ))}
               </motion.div>

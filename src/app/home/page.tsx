@@ -1,21 +1,30 @@
+"use client";
+
 import DynamicCarousel from "@/app/components/DynamicCarousel";
 import Image from "next/image";
 import { CiSearch } from "react-icons/ci";
 import { HiOutlineEnvelope } from "react-icons/hi2";
 import Navsidebar from "../components/NavSideBar";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Page() {
-  const tutors = [
-    { name: "John Doe", subject: "Math" },
-    { name: "Paul Johnson", subject: "History" },
-    { name: "Paul Johnson", subject: "History" },
-    { name: "Jane Smith", subject: "Science" },
-    { name: "Emily Davis", subject: "English" },
-    { name: "Emily Davis", subject: "English" },
-    { name: "Jane Smith", subject: "Science" },
-    { name: "John Doe", subject: "Math" },
-  ];
+  const [tutors, setTutors] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the backend
+    const fetchTutors = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/tutoring");
+        const data = await response.json();
+        setTutors(data);
+      } catch (error) {
+        console.error("Error fetching tutors:", error);
+      }
+    };
+
+    fetchTutors();
+  }, []);
 
   return (
     <main className="w-screen h-auto bg-secondary p-5 flex ">
@@ -96,7 +105,7 @@ export default function Page() {
               </Link>
             </div>
             <div className=" h-auto px-5 flex ">
-              <DynamicCarousel items={tutors} /> {/* Pass tutors data */}
+              <DynamicCarousel items={tutors} /> {/* Pass fetched data */}
             </div>
 
             {/* Tutor Label and view all */}
@@ -107,7 +116,7 @@ export default function Page() {
               </Link>
             </div>
             <div className=" h-auto px-5 flex ">
-              <DynamicCarousel items={tutors} /> {/* Pass tutors data */}
+              <DynamicCarousel items={tutors} /> {/* Pass fetched data */}
             </div>
           </div>
 

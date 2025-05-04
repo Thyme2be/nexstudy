@@ -3,6 +3,7 @@
 import Navsidebar from "../components/NavSideBar";
 import { useState, useEffect } from "react";
 import SubjectCard from "../components/SubjectCard";
+import toast, { Toaster } from "react-hot-toast"; // Import toast and Toaster
 
 export default function Page() {
   interface TutoringRequest {
@@ -56,6 +57,7 @@ export default function Page() {
       setTutoringRequests(data);
     } catch (error) {
       console.error(error);
+      toast.error("Failed to fetch tutoring requests.");
     }
   };
 
@@ -105,11 +107,12 @@ export default function Page() {
         );
 
         if (response.ok) {
-          alert("Request updated successfully!");
+          toast.success("Request updated successfully!"); // Use toast for success
           setIsEditing(false); // Exit editing mode
           setEditingId(null); // Clear editing ID
         } else {
           const errorText = await response.text();
+          toast.error(`Failed to update request: ${errorText}`); // Use toast for error
           console.error(
             "Failed to update request:",
             response.status,
@@ -124,9 +127,10 @@ export default function Page() {
         });
 
         if (response.ok) {
-          alert("Form submitted successfully!");
+          toast.success("Request created successfully!"); // Use toast for success
         } else {
           const errorText = await response.text();
+          toast.error(`Failed to create request: ${errorText}`); // Use toast for error
           console.error("Failed to submit form:", response.status, errorText);
         }
       }
@@ -144,12 +148,14 @@ export default function Page() {
       fetchData(); // Refresh the list
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("An unexpected error occurred while submitting the form."); // Use toast for catch block
     }
   };
 
   return (
     <main className="w-screen h-auto bg-secondary flex p-4 gap-10">
       {/* Left */}
+      <Toaster position="bottom-right" reverseOrder={false} /> {/* Changed position */}
       <Navsidebar />
 
       {/* Middle and Right */}

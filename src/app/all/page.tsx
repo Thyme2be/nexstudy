@@ -7,8 +7,32 @@ import BookDetail from "../components/BookDetail";
 
 export default function Page() {
   const [open, setOpen] = useState(false);
-  const [tutoringRequests, setTutoringRequests] = useState<{ id: string; subject: string; numStudents: number }[]>([]); // State for fetched data
-  const [selectedRequest, setSelectedRequest] = useState(null); // State for selected request
+  // Define the detailed type for a tutoring request
+  type TutoringRequestFull = {
+    id: string;
+    subject: string;
+    grade: string;
+    tutoringFormat: string;
+    via: string;
+    preferredTimes: string;
+    budget: number;
+    numStudents: number;
+    additionalNotes: string;
+  };
+  const [tutoringRequests, setTutoringRequests] = useState<
+    TutoringRequestFull[]
+  >([]); // State for fetched data
+  const [selectedRequest, setSelectedRequest] = useState<{
+    id: string;
+    subject: string;
+    grade: string;
+    tutoringFormat: string;
+    via: string;
+    preferredTimes: string;
+    budget: number;
+    numStudents: number;
+    additionalNotes: string;
+  } | null>(null); // State for selected request - Type matches TutoringRequestFull
 
   useEffect(() => {
     // Fetch data from the backend
@@ -16,9 +40,36 @@ export default function Page() {
       try {
         const response = await fetch("http://localhost:5000/api/tutoring");
         const data = await response.json();
-        setTutoringRequests(data); // Store fetched data in state
-        if (data.length > 0) {
-          setSelectedRequest(data[0]); // Set the first request as the default selected request
+
+        // Define the type for the tutoring request
+        type TutoringRequestAPI = {
+          id: string;
+          subject: string;
+          numStudents: number;
+          grade?: string;
+          tutoringFormat?: string;
+          via?: string;
+          preferredTimes?: string;
+          budget?: number;
+          additionalNotes?: string;
+        };
+
+        // Format the fetched data
+        const formattedData: TutoringRequestFull[] = data.map((request: TutoringRequestAPI) => ({
+          id: request.id,
+          subject: request.subject,
+          numStudents: request.numStudents,
+          grade: request.grade || "N/A",
+          tutoringFormat: request.tutoringFormat || "Online",
+          via: request.via || "Zoom",
+          preferredTimes: request.preferredTimes || "Flexible",
+          budget: request.budget || 0,
+          additionalNotes: request.additionalNotes || "None",
+        }));
+
+        setTutoringRequests(formattedData); // Store formatted data in state
+        if (formattedData.length > 0) {
+          setSelectedRequest(formattedData[0]); // Set the first request as the default selected request
         }
       } catch (error) {
         console.error("Error fetching tutoring requests:", error);
@@ -60,7 +111,7 @@ export default function Page() {
           {tutoringRequests.map((request) => (
             <div
               key={request.id}
-              onClick={() => setSelectedRequest(request)} // Set selected request on click
+              onClick={() => setSelectedRequest(request)} // Pass the full request object
             >
               <ThumbnailCard
                 subject={request.subject}
@@ -74,7 +125,8 @@ export default function Page() {
       {/* Right */}
       <section className="relative bg-secondary rounded-2xl flex-1/2 h-auto mt-2 py-6 px-10">
         <FaArrowAltCircleRight className="absolute right-0 top-0 text-primary text-4xl" />
-        {selectedRequest && <BookDetail request={selectedRequest} />} {/* Pass selected request */}
+        {selectedRequest && <BookDetail request={selectedRequest} />}{" "}
+        {/* Pass selected request */}
       </section>
     </main>
   );

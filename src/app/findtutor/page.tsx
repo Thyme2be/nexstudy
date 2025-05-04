@@ -247,15 +247,13 @@ export default function Page() {
           <label htmlFor="attachments" className="font-bold">
             Attachments (if any)
           </label>
-          <div className="flex items-center gap-2 w-full">
+          <div className="flex flex-col gap-2 w-full">
             <label
               htmlFor="attachments"
-              className="flex w-full justify-between items-center gap-2 cursor-pointer border p-2 rounded hover:bg-gray-100"
+              className="flex justify-between items-center gap-2 cursor-pointer border p-2 rounded hover:bg-gray-100"
             >
               <span className="text-gray-600">
-                {attachments.length > 0
-                  ? attachments.map((file) => file.name).join(", ")
-                  : "Upload Files"}
+                {attachments.length > 0 ? "Add More Files" : "Upload Files"}
               </span>
 
               {/* + logo */}
@@ -281,6 +279,31 @@ export default function Page() {
               onChange={(e) => setAttachments(Array.from(e.target.files || []))}
               className="hidden"
             />
+
+            {/* Display Selected Files */}
+            {attachments.length > 0 && (
+              <ul className="flex flex-col gap-1">
+                {attachments.map((file, index) => (
+                  <li
+                    key={index}
+                    className="flex justify-between items-center border p-2 rounded"
+                  >
+                    <span className="text-gray-600">{file.name}</span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setAttachments((prev) =>
+                          prev.filter((_, fileIndex) => fileIndex !== index)
+                        )
+                      }
+                      className=" bg-red-600 px-2 py-1 rounded-2xl text-white cursor-pointer hover:bg-red-700 duration-150 ease-in-out"
+                    >
+                      Delete
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Additional Notes */}

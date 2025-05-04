@@ -1,7 +1,7 @@
 const tutoringData = [
     {
       id: 1,
-      subject: 'Math',
+      subject: 'MA111',
       grade: 'Freshman',
       tutoringFormat: 'Online',
       via: 'Zoom',
@@ -12,7 +12,7 @@ const tutoringData = [
     },
     {
       id: 2,
-      subject: 'Science',
+      subject: 'CN101',
       grade: 'Sophomore',
       tutoringFormat: 'Onsite',
       via: 'Engineering Building',

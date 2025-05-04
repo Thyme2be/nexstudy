@@ -1,10 +1,26 @@
 "use client"; // Add this line at the very top
 
 import Navsidebar from "../components/NavSideBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SubjectCard from "../components/SubjectCard";
 
 export default function Page() {
+  interface TutoringRequest {
+    id: string;
+    subject: string;
+    // grade?: string;
+    // tutoringFormat?: string;
+    // via?: string;
+    // preferredTimes?: string;
+    // budget?: string;
+    // numStudents?: string;
+    // attachments?: File[];
+    // additionalNotes?: string;
+  }
+
+  const [tutoringRequests, setTutoringRequests] = useState<TutoringRequest[]>(
+    []
+  );
   const [subject, setSubject] = useState("");
   const [grade, setGrade] = useState("");
   const [tutoringFormat, setTutoringFormat] = useState("Online");
@@ -15,14 +31,39 @@ export default function Page() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [additionalNotes, setAdditionalNotes] = useState("");
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/tutoring", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setTutoringRequests(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); 
+
+    // Polling every 5 seconds
+    const interval = setInterval(() => {
+      fetchData();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <main className="w-screen h-screen bg-secondary flex p-4 gap-10">
+    <main className="w-screen h-auto bg-secondary flex p-4 gap-10">
       {/* Left */}
       <Navsidebar />
 
       {/* Middle and Right */}
       <section className="flex w-full">
-
         {/* Tutoring List section */}
         <section className="bg-white w-1/2 h-fit flex flex-col p-4 shadow-card rounded-2xl text-primary font-primary tracking-wide mb-1">
           <h1 className="text-primary font-primary font-bold text-4xl ">
@@ -33,11 +74,24 @@ export default function Page() {
           </p>
 
           {/* Card */}
-          <SubjectCard />
+          {tutoringRequests.map((request) => (
+            <SubjectCard
+              key={request.id}
+              subject={request.subject}
+              // grade={request.grade}
+              // tutoringFormat={request.tutoringFormat}
+              // via={request.via}
+              // preferredTimes={request.preferredTimes}
+              // budget={request.budget}
+              // numStudents={request.numStudents}
+              // attachments={request.attachments}
+              // additionalNotes={request.additionalNotes}
+            />
+          ))}
         </section>
 
         {/* Tutoring Request Form */}
-        <form className=" bg-white w-1/2 ml-5 flex flex-col p-5 gap-1 ">
+        <form className=" bg-white h-fit shadow-card rounded-2xl w-1/2 ml-5 flex flex-col p-5 gap-1 ">
           {/* Subject */}
           <label htmlFor="subject" className=" font-bold ">
             Subject to be studied*

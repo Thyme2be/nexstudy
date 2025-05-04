@@ -83,8 +83,6 @@ export default function Page() {
         body: formData,
       });
 
-      
-
       if (response.ok) {
         alert("Form submitted successfully!");
         // Reset the form
@@ -246,15 +244,19 @@ export default function Page() {
           />
 
           {/* Attachments */}
-          <label htmlFor="attachments" className=" font-bold ">
+          <label htmlFor="attachments" className="font-bold">
             Attachments (if any)
           </label>
-          <div className=" flex items-center gap-2 w-full ">
+          <div className="flex items-center gap-2 w-full">
             <label
               htmlFor="attachments"
               className="flex w-full justify-between items-center gap-2 cursor-pointer border p-2 rounded hover:bg-gray-100"
             >
-              <span className="text-gray-600">Upload Files</span>
+              <span className="text-gray-600">
+                {attachments.length > 0
+                  ? attachments.map((file) => file.name).join(", ")
+                  : "Upload Files"}
+              </span>
 
               {/* + logo */}
               <svg

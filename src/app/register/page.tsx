@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   FaUser,
@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Page() {
   const [username, setUsername] = useState("");
@@ -30,7 +31,7 @@ export default function Page() {
   const handleNavigateToLogin = () => {
     router.push("/");
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Add your login logic here
@@ -105,7 +106,6 @@ export default function Page() {
             />
           </div>
 
-
           {/* Password Field */}
           <div className="relative">
             <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
@@ -178,7 +178,7 @@ export default function Page() {
             type="submit"
             className=" bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer"
           >
-            SIGN UP
+            <Link href="/">SIGN UP</Link>
           </button>
         </form>
       </div>
@@ -186,7 +186,10 @@ export default function Page() {
       {/* Login Button */}
       <div className=" p-2 absolute top-1/2 left-[calc(26%+1rem)] -translate-y-1/2 z-10 flex ">
         {/* Logo Right Arrow */}
-        <div onClick={handleNavigateToLogin} className=" p-8 bg-white rounded-full shadow-sign-up hover:shadow-primary/70 hover:shadow-lg ease-in-out transition duration-300 cursor-pointer">
+        <div
+          onClick={handleNavigateToLogin}
+          className=" p-8 bg-white rounded-full shadow-sign-up hover:shadow-primary/70 hover:shadow-lg ease-in-out transition duration-300 cursor-pointer"
+        >
           <FaArrowLeft className="text-primary text-3xl" />
         </div>
         {/* Text Sign Up */}

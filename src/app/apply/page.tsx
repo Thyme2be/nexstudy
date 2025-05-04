@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function page() {
   return (
@@ -142,7 +143,7 @@ export default function page() {
               <button 
                 className=" cursor-pointer duration-200 hover:scale-115 ease-in-out bottom-3 right-5 bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
               >
-                Apply
+                <Link href="/all">Apply</Link>
               </button>
             </div>
             <div className=" m-2 text-end ">

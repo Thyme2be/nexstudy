@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface ChatMessageSentProps {
   preferredTimes: string;
   tutoringFormat: string;
@@ -34,7 +36,7 @@ export default function ChatMessageSent({
         Confirm
       </button>
       <button className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer ">
-        Review
+        <Link href={"/review"}>Review</Link>
       </button>
       <button
         className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer "

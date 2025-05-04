@@ -2,6 +2,7 @@
 
 import { FaUser, FaLock, FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation"; // Import useRouter
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter(); // Initialize router
@@ -64,7 +65,9 @@ export default function Home() {
             type="submit"
             className=" bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer"
           >
-            Log in
+            <Link href="/home">
+              Log in
+            </Link>
           </button>
         </form>
       </div>

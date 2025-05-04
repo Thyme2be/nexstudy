@@ -3,6 +3,7 @@
 import { FaChevronDown, FaArrowAltCircleRight } from "react-icons/fa"; // add this at the top
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   const [open, setOpen] = useState(false);
@@ -87,7 +88,7 @@ export default function Page() {
         </div>
         <div className=" flex flex-col mt-5 font-primary tracking-wide text-4xl text-primary space-y-4 items-end ">
           <button className="  cursor-pointer font-bold py-2 px-10 rounded-4xl bg-blue-300 hover:bg-blue-300/60 w-fit">
-            BOOK
+            <Link href={"/chat"}>BOOK</Link>
           </button>
           <button className=" cursor-pointer font-bold py-1 px-10 rounded-4xl border-primary hover:border-primary/80 hover:text-primary/80 border-2 w-fit">
             NEXT

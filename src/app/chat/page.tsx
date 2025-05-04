@@ -71,6 +71,27 @@ export default function Page() {
     }
   };
 
+  const handleDeleteRequest = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/tutoring/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Remove the deleted request from the state
+        setTutoringRequests((prev) => prev.filter((request) => request.id !== id));
+        setSelectedRequest(null); // Clear the selected request
+      } else {
+        console.error("Failed to delete the request");
+      }
+    } catch (error) {
+      console.error("Error deleting the request:", error);
+    }
+  };
+
   return (
     <main className=" h-auto p-5 bg-secondary flex gap-3 ">
       <Navsidebar />
@@ -117,11 +138,13 @@ export default function Page() {
           {/* Chat Message Sent */}
           {selectedRequest && (
             <ChatMessageSent
+              id={selectedRequest.id}
               preferredTimes={selectedRequest.preferredTimes || ""}
               tutoringFormat={selectedRequest.tutoringFormat || ""}
               budget={selectedRequest.budget || ""}
               numStudents={selectedRequest.numStudents || ""}
               additionalNotes={selectedRequest.additionalNotes || ""}
+              onDelete={handleDeleteRequest} // Pass the delete handler
             />
           )}
 

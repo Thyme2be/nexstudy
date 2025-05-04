@@ -4,6 +4,8 @@ interface ChatMessageSentProps {
   budget: string;
   numStudents: string;
   additionalNotes: string;
+  id: string; // Add the ID of the tutoring request
+  onDelete: (id: string) => void; // Callback for delete action
 }
 
 export default function ChatMessageSent({
@@ -12,6 +14,8 @@ export default function ChatMessageSent({
   budget,
   numStudents,
   additionalNotes,
+  id,
+  onDelete,
 }: ChatMessageSentProps) {
   return (
     <div className=" float-end bg-blue-300 max-w-1/2 p-5 text-md rounded-3xl flex flex-col gap-3 items-center ">
@@ -32,7 +36,10 @@ export default function ChatMessageSent({
       <button className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer ">
         Review
       </button>
-      <button className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer ">
+      <button
+        className=" p-2 w-3/5 bg-secondary hover:bg-secondary/80 rounded-2xl cursor-pointer "
+        onClick={() => onDelete(id)} // Call the onDelete function with the ID
+      >
         Cancel
       </button>
     </div>

@@ -61,14 +61,12 @@ export default function Home() {
             Remember me
           </label>
 
-          <button
-            type="submit"
-            className=" bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer"
+          <Link
+            href="/home"
+            className="block w-full text-center bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer" // Apply button styles directly to Link
           >
-            <Link href="/home">
-              Log in
-            </Link>
-          </button>
+            Log in
+          </Link>
         </form>
       </div>
 

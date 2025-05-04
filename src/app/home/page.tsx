@@ -48,11 +48,11 @@ export default function Page() {
           {/* Message */}
           <div className=" flex items-center gap-5 ">
             <div className=" text-primary text-5xl ">
-              <HiOutlineEnvelope />
+              <HiOutlineEnvelope className=" cursor-pointer hover:scale-110 duration-100 ease-in-out " />
             </div>
 
             {/* Profile */}
-            <div className=" cursor-pointer rounded-full overflow-hidden w-16 h-16 ring-2 ring-primary ring-offset-2 ">
+            <div className=" cursor-pointer hover:ring-1 hover:ring-yellow-500 duration-100 ease-in-out rounded-full overflow-hidden w-16 h-16 ring-2 ring-primary ring-offset-2 ">
               <Image
                 src={"https://picsum.photos/200/200"}
                 alt="profile"

@@ -1,6 +1,7 @@
 "use client";
 
 import { FaChevronDown, FaArrowAltCircleRight } from "react-icons/fa";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import ThumbnailCard from "../components/ThumbnailCard";
 import BookDetail from "../components/BookDetail";
@@ -124,7 +125,9 @@ export default function Page() {
 
       {/* Right */}
       <section className="relative bg-secondary rounded-2xl flex-1/2 h-auto mt-2 py-6 px-10">
-        <FaArrowAltCircleRight className="absolute right-0 top-0 text-primary text-4xl" />
+        <Link href="/home">
+          <FaArrowAltCircleRight className="absolute hover:scale-110 duration-100 ease-in-out cursor-pointer right-0 top-0 text-primary text-4xl" />
+        </Link>
         {selectedRequest && <BookDetail request={selectedRequest} />}{" "}
         {/* Pass selected request */}
       </section>

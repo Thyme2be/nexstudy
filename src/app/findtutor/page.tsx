@@ -31,6 +31,17 @@ export default function Page() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [additionalNotes, setAdditionalNotes] = useState("");
 
+  useEffect(() => {
+    fetchData();
+
+    // Polling every 5 seconds
+    const interval = setInterval(() => {
+      fetchData();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/tutoring", {
@@ -46,16 +57,54 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {
-    fetchData(); 
+  // Create
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    // Polling every 5 seconds
-    const interval = setInterval(() => {
-      fetchData();
-    }, 5000);
+    const formData = new FormData();
+    formData.append("subject", subject);
+    formData.append("grade", grade);
+    formData.append("tutoringFormat", tutoringFormat);
+    formData.append("via", via);
+    formData.append("preferredTimes", preferredTimes);
+    formData.append("budget", budget);
+    formData.append("numStudents", numStudents);
+    formData.append("additionalNotes", additionalNotes);
 
-    return () => clearInterval(interval);
-  }, []);
+    // Append files to the formData
+    attachments.forEach((file, index) => {
+      formData.append(`attachments[${index}]`, file);
+    });
+
+    // Send the formData to the server
+    try {
+      const response = await fetch("http://localhost:5000/api/tutoring", {
+        method: "POST",
+        body: formData,
+      });
+
+      
+
+      if (response.ok) {
+        alert("Form submitted successfully!");
+        // Reset the form
+        setSubject("");
+        setGrade("");
+        setTutoringFormat("Online");
+        setVia("");
+        setPreferredTimes("");
+        setBudget("");
+        setNumStudents("");
+        setAttachments([]);
+        setAdditionalNotes("");
+      } else {
+        const errorText = await response.text();
+        console.error("Failed to submit form:", response.status, errorText);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
 
   return (
     <main className="w-screen h-auto bg-secondary flex p-4 gap-10">
@@ -91,7 +140,10 @@ export default function Page() {
         </section>
 
         {/* Tutoring Request Form */}
-        <form className=" bg-white h-fit shadow-card rounded-2xl w-1/2 ml-5 flex flex-col p-5 gap-1 ">
+        <form
+          onSubmit={handleSubmit}
+          className=" bg-white h-fit shadow-card rounded-2xl w-1/2 ml-5 flex flex-col p-5 gap-1 "
+        >
           {/* Subject */}
           <label htmlFor="subject" className=" font-bold ">
             Subject to be studied*
@@ -197,7 +249,7 @@ export default function Page() {
           <label htmlFor="attachments" className=" font-bold ">
             Attachments (if any)
           </label>
-          <div className="flex items-center gap-2 w-full ">
+          <div className=" flex items-center gap-2 w-full ">
             <label
               htmlFor="attachments"
               className="flex w-full justify-between items-center gap-2 cursor-pointer border p-2 rounded hover:bg-gray-100"
@@ -243,7 +295,10 @@ export default function Page() {
             spellCheck="false"
           ></textarea>
 
-          <button className=" cursor-pointer hover:scale-110 duration-150 ease-in-out self-center text-center bg-primary rounded-2xl font-primary text-2xl font-light text-white shadow-xs shadow-primary/80 py-1 tracking-wider mt-5 w-40 ">
+          <button
+            type="submit"
+            className=" cursor-pointer hover:scale-110 duration-150 ease-in-out self-center text-center bg-primary rounded-2xl font-primary text-2xl font-light text-white shadow-xs shadow-primary/80 py-1 tracking-wider mt-5 w-40 "
+          >
             POST
           </button>
         </form>

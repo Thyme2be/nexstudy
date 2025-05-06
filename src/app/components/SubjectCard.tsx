@@ -1,5 +1,6 @@
 import { BsPencilSquare } from "react-icons/bs";
 import Image from "next/image";
+import Link from "next/link";
 
 interface SubjectCardProps {
   subject: string;
@@ -23,11 +24,16 @@ export default function SubjectCard({ subject, onEdit }: SubjectCardProps) {
               {subject}
             </h1>
           </div>
-          <BsPencilSquare onClick={onEdit} className=" text-4xl cursor-pointer hover:scale-125 duration-100 ease-in-out" />
+          <BsPencilSquare
+            onClick={onEdit}
+            className=" text-4xl cursor-pointer hover:scale-125 duration-100 ease-in-out"
+          />
         </div>
-        <button className=" absolute right-4 bottom-4 cursor-pointer duration-200 hover:scale-115 ease-in-out bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline">
-          CONFIRM
-        </button>
+        <Link href={"/chat"}>
+          <button className=" absolute right-4 bottom-4 cursor-pointer duration-200 hover:scale-115 ease-in-out bg-primary hover:bg-green-700 text-white text-2xl font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline">
+            CONFIRM
+          </button>
+        </Link>
       </div>
     );
   }

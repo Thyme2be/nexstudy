@@ -42,12 +42,17 @@ export default function BookDetail({ request }: BookDetailProps) {
         </p>
       </div>
       <div className="flex flex-col mt-5 font-primary tracking-wide text-4xl text-primary space-y-4 items-end">
-        <button className="cursor-pointer font-bold py-2 px-10 rounded-4xl bg-blue-300 hover:bg-blue-300/60 w-fit">
+        <button className="cursor-pointer font-bold py-2 px-15 rounded-4xl bg-blue-300 hover:bg-blue-300/60 w-fit">
           <Link href={"/chat"}>BOOK</Link>
         </button>
-        <button className="cursor-pointer font-bold py-1 px-10 rounded-4xl border-primary hover:border-primary/80 hover:text-primary/80 border-2 w-fit">
+        <button className="cursor-pointer font-bold py-1 px-15 rounded-4xl border-primary hover:border-primary/80 hover:text-primary/80 border-2 w-fit">
           NEXT
         </button>
+        <Link href={"/review"}>
+          <button className="cursor-pointer font-bold py-1 px-11 rounded-4xl border-primary hover:border-primary/80 hover:text-primary/80 border-2 w-fit">
+            REVIEW
+          </button>
+        </Link>
       </div>
     </>
   );

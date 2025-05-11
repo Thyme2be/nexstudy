@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  FaUser,
   FaLock,
   FaArrowLeft,
   FaIdCard,
@@ -11,9 +10,9 @@ import {
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Page() {
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [studentId, setStudentId] = useState("");
   const [yearOfEntry, setYearOfEntry] = useState("");
@@ -32,41 +31,38 @@ export default function Page() {
     router.push("/");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your login logic here
+
     console.log("Form submitted:", {
-      username,
       password,
       studentId,
       yearOfEntry,
       rememberMe,
       fullName,
     });
-    // In a real app, you'd send this data to your API
-    // Example (replace with your actual authentication):
-    // fetch('/api/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ username, password, studentId, yearOfEntry, fullName }),
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //   if (data.success) {
-    //     router.push('/dashboard'); // Redirect on success
-    //   } else {
-    //     // Handle error (e.g., show a message to the user)
-    //     console.error('Login failed:', data.message);
-    //   }
-    // })
-    // .catch(error => {
-    //   console.error('Error:', error);
-    // });
 
-    // For this example, let's just simulate a successful login after a short delay
-    setTimeout(() => {
-      router.push("/dashboard"); //  Make sure you have a page named /dashboard
-    }, 1000);
+    const registerData = new FormData();
+    registerData.append("fullName", fullName);
+    registerData.append("password", password);
+    registerData.append("studenId", studentId);
+    registerData.append("yearOfEntry", yearOfEntry);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        body: registerData,
+      });
+
+      if (response.ok) {
+        router.push("/")
+        toast.success("Request created successfully!");
+      }
+    } catch (error) {
+      console.log(`Error crete user data: ${error}`);
+      toast.error("Failed to create user request"); // Use toast for error
+    }
+
   };
 
   const handleTermsClick = useCallback(() => {
@@ -75,10 +71,12 @@ export default function Page() {
     console.log("Terms and Privacy Policy clicked");
     // Example:  router.push('/terms-and-privacy');
     alert("This would open the Terms and Privacy Policy in a real app.");
-  }, [router]);
+  }, []);
 
   return (
     <main className="bg-blue-500 h-screen flex">
+      <Toaster position="bottom-right" reverseOrder={false} />{" "}
+      {/* Changed position */}
       {/* Login Tab */}
       <div className="bg-white w-2/5 h-full flex flex-col justify-center items-center p-16">
         {/* Logo and Welcome Text */}
@@ -182,7 +180,6 @@ export default function Page() {
           </button>
         </form>
       </div>
-
       {/* Login Button */}
       <div className=" p-2 absolute top-1/2 left-[calc(26%+1rem)] -translate-y-1/2 z-10 flex ">
         {/* Logo Right Arrow */}
@@ -198,7 +195,6 @@ export default function Page() {
           <h1 className=" text-6xl font-primary ">LOG IN</h1>
         </div>
       </div>
-
       {/* Login Background */}
       <div className="flex-grow w-full h-full bg-primary ">
         <div className=" w-full h-screen bg-[url(../../public/login_background.jpg)] opacity-50 bg-no-repeat bg-cover "></div>

@@ -198,7 +198,7 @@ export default function Page() {
 
           {/* Grade */}
           <label htmlFor="grade" className=" font-bold ">
-            Subject to be studied*
+            Grade*
           </label>
           <select
             id="grade"

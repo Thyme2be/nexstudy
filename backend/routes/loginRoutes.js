@@ -1,15 +1,12 @@
 import express from "express";
 
-import {
-  getAllRequests,
-  getRequestById,
-} from "../controllers/tutoringController.js";
+import { createRequest, getAllRequests } from "../controllers/loginController.js";
 
 const router = express.Router();
 
 // CRUD Routes
 router
-    .get("/", getAllRequests)       // Get all tutoring requests
-    .get("/:id", getRequestById)    // Get a single request by ID
+.get("/", getAllRequests) // Get all login data
+.post("", createRequest)
 
 export default router;

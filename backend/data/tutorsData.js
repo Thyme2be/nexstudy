@@ -1,34 +1,25 @@
 const tutorsData = [
   {
-    Name: "John Doe",
-    Nickname: "JD",
-    "Tutor Experience":
-      "5 years of tutoring high school students in Math and Science.",
-    Grade: "Bachelor's Degree",
-    Cost: "300-400",
-    "Convenient Day and Time": "Monday evenings, Wednesday afternoons",
-    "Subjects to be tutor": ["Mathematics", "Physics", "Chemistry"],
+    fullName: "Leonardo da Vinci",
+    nickname: "Leo",
+    preferredDays: ["Monday", "Tuesday", "Wednesday"],
+    cost: 200,
+    subject: ["CN200"]
   },
   {
-    Name: "Jane Smith",
-    Nickname: "Janie",
-    "Tutor Experience":
-      "3 years of tutoring college students in English and History.",
-    Grade: "Master's Degree",
-    Cost: "400-500",
-    "Convenient Day and Time": "Tuesday mornings, Thursday evenings",
-    "Subjects to be tutor": ["English", "History"],
+    fullName: "Sofia Petrova",
+    nickname: "Sophie",
+    preferredDays: ["Wednesday", "Thursday", "Friday", "Sunday"],
+    cost: 250,
+    subject: ["SF230", "CN200"]
   },
   {
-    Name: "Alice Johnson",
-    Nickname: "Ali",
-    "Tutor Experience":
-      "2 years of tutoring high school students in Biology and Chemistry.",
-    Grade: "PhD",
-    Cost: "500-600",
-    "Convenient Day and Time": "Friday afternoons, Saturday mornings",
-    "Subjects to be tutor": ["Biology", "Chemistry"],
-  },
+    fullName: "Omar Hassan",
+    nickname: "Omi",
+    preferredDays: ["Monday", "Wednesday", "Saturday"],
+    cost: 150,
+    subject: ["CN200"]
+  }
 ];
 
 export default tutorsData;

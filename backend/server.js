@@ -1,6 +1,7 @@
 import express from 'express';
 import tutoringRoutes from './routes/tutoringRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
+import tutorsRoutes from './routes/tutorsRoutes.js';
 import cors from "cors";
 
 const app = express()
@@ -9,6 +10,7 @@ const port = 5000
 app.use(cors());
 app.use(express.json());
 app.use('/api/tutoring', tutoringRoutes);
+app.use('/api/tutors', tutorsRoutes);
 app.use('/api/login', loginRoutes);
 
 

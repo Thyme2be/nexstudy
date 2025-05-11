@@ -9,21 +9,32 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  const [tutors, setTutors] = useState([]);
+  const [tutoring, setTutoring] = useState([]);
+  // const [peopleTutors, setPeopleTutors] = useState([]);
 
   useEffect(() => {
     // Fetch data from the backend
-    const fetchTutors = async () => {
+    const fetchTutoring = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/tutoring");
         const data = await response.json();
-        setTutors(data);
+        setTutoring(data);
       } catch (error) {
         console.error("Error fetching tutors:", error);
       }
     };
+    
+    // const fetchPeopleTutors = async () => {
+    //   try {
+    //     const response = await fetch("http://localhost:5000/api/tutoring");
+    //     const data = await response.json();
+    //     setTutors(data);
+    //   } catch (error) {
+    //     console.error("Error fetching tutors:", error);
+    //   }
+    // };
 
-    fetchTutors();
+    fetchTutoring();
   }, []);
 
   return (
@@ -105,7 +116,7 @@ export default function Page() {
               </Link>
             </div>
             <div className=" h-auto px-5 flex ">
-              <DynamicCarousel items={tutors} /> {/* Pass fetched data */}
+              <DynamicCarousel items={tutoring} /> {/* Pass fetched data */}
             </div>
 
             {/* Tutor Label and view all */}
@@ -116,7 +127,7 @@ export default function Page() {
               </Link>
             </div>
             <div className=" h-auto px-5 flex ">
-              <DynamicCarousel items={tutors} /> {/* Pass fetched data */}
+              <DynamicCarousel items={tutoring} /> {/* Pass fetched data */}
             </div>
           </div>
 

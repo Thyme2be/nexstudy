@@ -35,10 +35,6 @@ export const createRequest = [
         additionalNotes,
       } = req.body;
 
-      // Log the parsed data for debugging
-      console.log("Form Data:", req.body);
-      console.log("Files:", req.files);
-
       if (
         !subject ||
         !grade ||

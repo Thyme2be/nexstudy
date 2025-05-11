@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 export default function Page() {
   const [tutoring, setTutoring] = useState([]);
-  // const [peopleTutors, setPeopleTutors] = useState([]);
+  const [tutors, setTutors] = useState([]);
 
   useEffect(() => {
     // Fetch data from the backend
@@ -20,25 +20,29 @@ export default function Page() {
         const data = await response.json();
         setTutoring(data);
       } catch (error) {
-        console.error("Error fetching tutors:", error);
+        console.error("Error fetching tutoring:", error);
       }
     };
     
-    // const fetchPeopleTutors = async () => {
-    //   try {
-    //     const response = await fetch("http://localhost:5000/api/tutoring");
-    //     const data = await response.json();
-    //     setTutors(data);
-    //   } catch (error) {
-    //     console.error("Error fetching tutors:", error);
-    //   }
-    // };
+    const fetchTutors = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/tutors/");
+        const data = await response.json();
+        setTutors(data);
+      } catch (error) {
+        console.error("Error fetching tutors:", error);
+      }
+    };
 
     fetchTutoring();
+    fetchTutors();
   }, []);
+
+  // console.log(tutors)
 
   return (
     <main className="w-screen h-auto bg-secondary p-5 flex ">
+      
       {/* Navbar on the left */}
       <Navsidebar />
 
@@ -116,7 +120,7 @@ export default function Page() {
               </Link>
             </div>
             <div className=" h-auto px-5 flex ">
-              <DynamicCarousel items={tutoring} /> {/* Pass fetched data */}
+              <DynamicCarousel items={tutoring} type="tutoring" /> {/* Pass fetched data */}
             </div>
 
             {/* Tutor Label and view all */}
@@ -127,7 +131,7 @@ export default function Page() {
               </Link>
             </div>
             <div className=" h-auto px-5 flex ">
-              <DynamicCarousel items={tutoring} /> {/* Pass fetched data */}
+              <DynamicCarousel items={tutors} type="tutors" /> {/* Pass fetched data */}
             </div>
           </div>
 

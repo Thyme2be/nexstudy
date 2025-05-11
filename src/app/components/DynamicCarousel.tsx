@@ -4,16 +4,21 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Tutor {
+interface Tutoring {
   subject: string;
   numStudents: number;
 }
 
-interface DynamicCarouselProps {
-  items: Tutor[];
+interface Tutor {
+  nickname: string;
 }
 
-export default function DynamicCarousel({ items }: DynamicCarouselProps) {
+interface DynamicCarouselProps {
+  items: (Tutoring | Tutor)[];
+  type: "tutoring" | "tutors";
+}
+
+export default function DynamicCarousel({ items, type }: DynamicCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
   const itemsPerPage: number = 4;
@@ -84,23 +89,50 @@ export default function DynamicCarousel({ items }: DynamicCarouselProps) {
                 transition={{ duration: 0.1 }}
                 className="grid grid-cols-4 gap-4 w-full"
               >
-                {visibleItems.map((tutor, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-100 p-4 rounded shadow-card text-center cursor-pointer hover:scale-105 duration-100 "
-                  >
-                    <Image
-                      src={"https://picsum.photos/200/200"}
-                      width={200}
-                      height={200}
-                      alt="tutor image"
-                    />
-                    <h2 className="mt-2 text-xl font-bold">{tutor.subject}</h2>
-                    <p className="text-gray-600">
-                      Group of: {tutor.numStudents}
-                    </p>
-                  </div>
-                ))}
+                {visibleItems.map((item, index) => {
+                  if (type === "tutoring" && "subject" in item) {
+                    const tutoringItem = item as Tutoring;
+                    return (
+                      <div
+                        key={index}
+                        className="bg-gray-100 p-4 rounded shadow-card text-center cursor-pointer hover:scale-105 duration-100"
+                      >
+                        <Image
+                          src={"https://picsum.photos/200/200"}
+                          width={200}
+                          height={200}
+                          alt="tutor image"
+                        />
+                        <h2 className="mt-2 text-xl font-bold">
+                          {tutoringItem.subject}
+                        </h2>
+                        <p className="text-gray-600">
+                          Group of: {tutoringItem.numStudents}
+                        </p>
+                      </div>
+                    );
+                  }
+                  if (type === "tutors" && "nickname" in item) {
+                    const tutorItem = item as Tutor;
+                    return (
+                      <div
+                        key={index}
+                        className="bg-gray-100 p-4 rounded shadow-card text-center cursor-pointer hover:scale-105 duration-100"
+                      >
+                        <Image
+                          src={"https://picsum.photos/200/200"}
+                          width={200}
+                          height={200}
+                          alt="tutor image"
+                        />
+                        <h2 className="mt-2 text-xl font-bold">
+                          {tutorItem.nickname}
+                        </h2>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
               </motion.div>
             </AnimatePresence>
           </div>

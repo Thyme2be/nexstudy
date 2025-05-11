@@ -1,4 +1,4 @@
-import tutorsData from './../data/tutorsData';
+import tutorsData from './../data/tutorsData.js';
 
 export const getAllRequests = (_, res) => {
   res.json(tutorsData);

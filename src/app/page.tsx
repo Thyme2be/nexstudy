@@ -2,18 +2,53 @@
 
 import { FaUser, FaLock, FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation"; // Import useRouter
-import Link from "next/link";
+import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const router = useRouter(); // Initialize router
 
   const handleNavigateToRegister = () => {
     router.push("/register"); // Navigate to /register
   };
 
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const loginData = {
+      username,
+      password,
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/login/credential",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Tell server to expect JSON
+          },
+          body: JSON.stringify(loginData),
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Login successfully!");
+        setTimeout(() => router.push("/home"), 1000);
+      } else {
+        toast.error("Invalid Credential")
+      }
+    } catch (error) {
+      console.error(`Error login: ${error}`);
+    }
+  };
+
   return (
     <main className="bg-blue-500 h-screen flex">
-      {/* Login Tab */}
+      <Toaster position="bottom-right" reverseOrder={false} /> {/* Login Tab */}
       <div className="bg-white w-2/5 h-full flex flex-col justify-center items-center p-16">
         {/* Logo and Welcome Text */}
         <div className="w-full flex gap-4 mb-8 justify-center">
@@ -26,7 +61,7 @@ export default function Home() {
         </div>
 
         {/* Input Fields */}
-        <form className="w-full flex flex-col gap-4">
+        <form className="w-full flex flex-col gap-4" onSubmit={handleLogin}>
           {/* Username Field */}
           <div className="relative">
             <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-primary" />
@@ -34,6 +69,8 @@ export default function Home() {
               type="text"
               placeholder="Username"
               className="pl-10 pr-4 py-3 border-2 border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 w-full"
+              onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
 
@@ -44,6 +81,8 @@ export default function Home() {
               type="password"
               placeholder="Password"
               className="pl-10 pr-4 py-3 border-2 border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 w-full"
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -61,15 +100,14 @@ export default function Home() {
             Remember me
           </label>
 
-          <Link
-            href="/home"
+          <button
+            type="submit"
             className="block w-full text-center bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer" // Apply button styles directly to Link
           >
             Log in
-          </Link>
+          </button>
         </form>
       </div>
-
       {/* Sign Up Button */}
       <div className="p-2 absolute top-1/2 left-[calc(26%+1rem)] -translate-y-1/2 z-10 flex">
         {/* Logo Right Arrow */}
@@ -85,7 +123,6 @@ export default function Home() {
           <h1 className="text-6xl font-primary">SIGN UP</h1>
         </div>
       </div>
-
       {/* Login Background */}
       <div className="flex-grow w-full h-full bg-primary">
         <div className="w-full h-screen bg-[url(../../public/login_background.jpg)] opacity-50 bg-no-repeat bg-cover"></div>

@@ -9,7 +9,6 @@ import {
 } from "react-icons/fa";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Page() {
@@ -32,37 +31,33 @@ export default function Page() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    // console.log("HandleSubmit Working")
     e.preventDefault();
 
-    console.log("Form submitted:", {
+    const registerData = {
+      fullName,
       password,
       studentId,
       yearOfEntry,
-      rememberMe,
-      fullName,
-    });
-
-    const registerData = new FormData();
-    registerData.append("fullName", fullName);
-    registerData.append("password", password);
-    registerData.append("studenId", studentId);
-    registerData.append("yearOfEntry", yearOfEntry);
+    };
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5000/api/login/register", {
         method: "POST",
-        body: registerData,
+        headers: {
+          "Content-Type": "application/json", // Tell server to expect JSON
+        },
+        body: JSON.stringify(registerData),
       });
 
       if (response.ok) {
-        router.push("/")
         toast.success("Request created successfully!");
+        setTimeout(() => router.push("/"), 1000)
       }
     } catch (error) {
       console.log(`Error crete user data: ${error}`);
       toast.error("Failed to create user request"); // Use toast for error
     }
-
   };
 
   const handleTermsClick = useCallback(() => {
@@ -176,7 +171,7 @@ export default function Page() {
             type="submit"
             className=" bg-primary font-primary text-white text-4xl py-2 hover:shadow-button ease-in-out transition duration-300 cursor-pointer"
           >
-            <Link href="/">SIGN UP</Link>
+            SIGN UP
           </button>
         </form>
       </div>

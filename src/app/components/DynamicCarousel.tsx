@@ -3,13 +3,16 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface Tutoring {
+  id: number;
   subject: string;
   numStudents: number;
 }
 
 interface Tutor {
+  id: number;
   nickname: string;
 }
 
@@ -93,8 +96,9 @@ export default function DynamicCarousel({ items, type }: DynamicCarouselProps) {
                   if (type === "tutoring" && "subject" in item) {
                     const tutoringItem = item as Tutoring;
                     return (
-                      <div
+                      <Link
                         key={index}
+                        href={`/all?type=TUTOR MATCHING&id=${index}`}
                         className="bg-gray-100 p-4 rounded shadow-card text-center cursor-pointer hover:scale-105 duration-100"
                       >
                         <Image
@@ -109,14 +113,16 @@ export default function DynamicCarousel({ items, type }: DynamicCarouselProps) {
                         <p className="text-gray-600">
                           Group of: {tutoringItem.numStudents}
                         </p>
-                      </div>
+                      </Link>
                     );
                   }
+
                   if (type === "tutors" && "nickname" in item) {
                     const tutorItem = item as Tutor;
                     return (
-                      <div
+                      <Link
                         key={index}
+                        href={`/all?type=TUTOR&id=${index}`}
                         className="bg-gray-100 p-4 rounded shadow-card text-center cursor-pointer hover:scale-105 duration-100"
                       >
                         <Image
@@ -128,7 +134,7 @@ export default function DynamicCarousel({ items, type }: DynamicCarouselProps) {
                         <h2 className="mt-2 text-xl font-bold">
                           {tutorItem.nickname}
                         </h2>
-                      </div>
+                      </Link>
                     );
                   }
                   return null;

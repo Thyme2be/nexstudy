@@ -126,7 +126,7 @@ export default function Page() {
             {/* Tutor Label and view all */}
             <div className=" mt-5 flex justify-between w-full h-fit px-5 items-center ">
               <h1 className=" text-4xl text-primary font-primary ">TUTORS</h1>
-              <Link href="/all" className=" text-lg hover:underline ">
+              <Link href="/all?type=TUTOR" className=" text-lg hover:underline ">
                 View All
               </Link>
             </div>

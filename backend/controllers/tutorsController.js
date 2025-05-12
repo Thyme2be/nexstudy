@@ -10,6 +10,7 @@ export const createRequest = [
       const { fullName, nickName, preferredDays, cost, subject } = req.body;
 
       const newRequest = {
+        id: tutors.length + 1,
         fullName: fullName,
         nickName: nickName,
         preferredDays: preferredDays,

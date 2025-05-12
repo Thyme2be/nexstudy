@@ -1,6 +1,6 @@
 "use client";
 
-import { FaChevronDown, FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import ThumbnailCard from "../components/ThumbnailCard";
@@ -26,6 +26,11 @@ export default function Page() {
     additionalNotes: string;
   };
 
+  type TutorsFull = {
+    id: number;
+    nickname: string;
+  };
+
   const [tutoringRequests, setTutoringRequests] = useState<
     TutoringRequestFull[]
   >([]); // State for fetched data
@@ -41,6 +46,10 @@ export default function Page() {
     numStudents: number;
     additionalNotes: string;
   } | null>(null); // State for selected request - Type matches TutoringRequestFull
+
+  const [tutorsRequest, setTutorsRequest] = useState<
+    { id: number; nickname: string }[]
+  >([]);
 
   useEffect(() => {
     // Fetch data from the backend
@@ -81,13 +90,34 @@ export default function Page() {
         if (formattedData.length > 0) {
           setSelectedRequest(formattedData[0]); // Set the first request as the default selected request
         }
-        
       } catch (error) {
         console.error("Error fetching tutoring requests:", error);
       }
     };
 
+    const fetchTutors = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/tutors/", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json();
+
+        // Example formatting — adjust based on your actual tutor object structure
+        const formattedTutors = data.map((tutor: TutorsFull) => ({
+          id: tutor.id,
+          nickname: tutor.nickname || "Unknown",
+        }));
+
+        setTutorsRequest(formattedTutors);
+      } catch (error) {
+        console.error(`Fetched Tutors failed: ${error}`);
+      }
+    };
+
     fetchTutoringRequests();
+    fetchTutors();
   }, []);
 
   return (
@@ -102,23 +132,30 @@ export default function Page() {
           onChange={handleChange}
           className=" bg-[#53AEE6] text-white text-center font-bold text-xl font-secondary rounded p-2"
         >
-          <option value="TUTOR MATCHING" >TUTOR MATCHING</option>
-          <option value="TUTOR" >TUTOR</option>
+          <option value="TUTOR MATCHING">TUTOR MATCHING</option>
+          <option value="TUTOR">TUTOR</option>
         </select>
 
         {/* Thumbnail Data */}
         <div className="mt-5 flex gap-12 w-full flex-wrap">
-          {tutoringRequests.map((request) => (
-            <div
-              key={request.id}
-              onClick={() => setSelectedRequest(request)} // Pass the full request object
-            >
-              <ThumbnailCard
-                subject={request.subject}
-                numStudents={request.numStudents}
-              />
-            </div>
-          ))}
+          {selectedOption === "TUTOR MATCHING" &&
+            tutoringRequests.map((request) => (
+              <div key={request.id} onClick={() => setSelectedRequest(request)}>
+                <ThumbnailCard
+                  subject={request.subject}
+                  numStudents={request.numStudents}
+                />
+              </div>
+            ))}
+
+          {selectedOption === "TUTOR" &&
+            tutorsRequest.map((tutor) => (
+              <div key={tutor.id}>
+                <ThumbnailCard
+                  subject={tutor.nickname}
+                />
+              </div>
+            ))}
         </div>
       </section>
 

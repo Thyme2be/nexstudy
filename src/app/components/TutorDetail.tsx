@@ -1,7 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function TutorDetail() {
+interface TutorDetailProps {
+  tutor: {
+    fullName: string,
+    nickname: string;
+    grade: string;
+    preferredDays: string;
+    cost: number;
+    subject: string;
+  };
+}
+
+export default function TutorDetail({ tutor }: TutorDetailProps) {
   return (
     <>
       <div className="w-full flex justify-center items-center">
@@ -14,18 +25,17 @@ export default function TutorDetail() {
         />
       </div>
       <div className="mt-5 font-primary tracking-wide text-primary text-3xl text-center">
-        <h1>{`Tutor's full name`}</h1>
+        <h1>{tutor.fullName}</h1>
       </div>
       {/* Detail */}
       <div className="mt-5 font-secondary font-bold text-xl">
         <p>
-          Nickname: tutor nickname <br />
-          Grade: year 3 <br />
+          Nickname: {tutor.nickname} <br />
+          Grade: {tutor.grade} <br />
           Preferred days and times for lessons: <br />
-          Monday - Wednesday  10.00-12.00 o clock <br />
-          Sunday 15.00 - 16.00 o clock <br />
-          Cost: 100-250 Baht <br />
-          Subject: CN200, SF230
+          {tutor.preferredDays} <br />
+          Cost: {tutor.cost} Baht <br />
+          Subject: {tutor.subject}
         </p>
       </div>
       <div className="flex flex-col mt-5 font-primary tracking-wide text-4xl text-primary space-y-4 items-end">
@@ -42,5 +52,5 @@ export default function TutorDetail() {
         </Link>
       </div>
     </>
-  )
+  );
 }

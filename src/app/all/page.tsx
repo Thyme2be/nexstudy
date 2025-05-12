@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import ThumbnailCard from "../components/ThumbnailCard";
 import BookDetail from "../components/BookDetail";
+import TutorDetail from "../components/TutorDetail";
 
 export default function Page() {
   const [selectedOption, setSelectedOption] = useState("TUTOR MATCHING");
@@ -28,28 +29,24 @@ export default function Page() {
 
   type TutorsFull = {
     id: number;
+    grade: string;
+    fullName: string;
     nickname: string;
+    preferredDays: string;
+    cost: number;
+    subject: string;
   };
 
   const [tutoringRequests, setTutoringRequests] = useState<
     TutoringRequestFull[]
   >([]); // State for fetched data
 
-  const [selectedRequest, setSelectedRequest] = useState<{
-    id: string;
-    subject: string;
-    grade: string;
-    tutoringFormat: string;
-    via: string;
-    preferredTimes: string;
-    budget: number;
-    numStudents: number;
-    additionalNotes: string;
-  } | null>(null); // State for selected request - Type matches TutoringRequestFull
+  const [tutorsRequest, setTutorsRequest] = useState<TutorsFull[]>([]);
 
-  const [tutorsRequest, setTutorsRequest] = useState<
-    { id: number; nickname: string }[]
-  >([]);
+  const [selectedTutoringRequest, setSelectedTutoringRequest] =
+    useState<TutoringRequestFull | null>(null); // Data from Tutoring
+
+  const [selectedTutors, setSelectedTutors] = useState<TutorsFull | null>(null);
 
   useEffect(() => {
     // Fetch data from the backend
@@ -88,7 +85,7 @@ export default function Page() {
 
         setTutoringRequests(formattedData); // Store formatted data in state
         if (formattedData.length > 0) {
-          setSelectedRequest(formattedData[0]); // Set the first request as the default selected request
+          setSelectedTutoringRequest(formattedData[0]); // Set the first request as the default selected request
         }
       } catch (error) {
         console.error("Error fetching tutoring requests:", error);
@@ -105,12 +102,20 @@ export default function Page() {
         const data = await res.json();
 
         // Example formatting — adjust based on your actual tutor object structure
-        const formattedTutors = data.map((tutor: TutorsFull) => ({
+        const formattedTutors: TutorsFull[] = data.map((tutor: TutorsFull) => ({
           id: tutor.id,
+          grade: tutor.grade,
+          fullName: tutor.fullName,
           nickname: tutor.nickname || "Unknown",
+          preferredDays: tutor.preferredDays || "N/A",
+          cost: tutor.cost || 0,
+          subject: tutor.subject || "None",
         }));
 
         setTutorsRequest(formattedTutors);
+        if (formattedTutors.length > 0) {
+          setSelectedTutors(formattedTutors[0]); // Set the first request as the default selected request
+        }
       } catch (error) {
         console.error(`Fetched Tutors failed: ${error}`);
       }
@@ -140,7 +145,10 @@ export default function Page() {
         <div className="mt-5 flex gap-12 w-full flex-wrap">
           {selectedOption === "TUTOR MATCHING" &&
             tutoringRequests.map((request) => (
-              <div key={request.id} onClick={() => setSelectedRequest(request)}>
+              <div
+                key={request.id}
+                onClick={() => setSelectedTutoringRequest(request)}
+              >
                 <ThumbnailCard
                   subject={request.subject}
                   numStudents={request.numStudents}
@@ -150,10 +158,8 @@ export default function Page() {
 
           {selectedOption === "TUTOR" &&
             tutorsRequest.map((tutor) => (
-              <div key={tutor.id}>
-                <ThumbnailCard
-                  subject={tutor.nickname}
-                />
+              <div key={tutor.id} onClick={() => setSelectedTutors(tutor)}>
+                <ThumbnailCard subject={tutor.nickname} />
               </div>
             ))}
         </div>
@@ -164,8 +170,14 @@ export default function Page() {
         <Link href="/home">
           <FaArrowAltCircleRight className="absolute hover:scale-110 duration-100 ease-in-out cursor-pointer right-0 top-0 text-primary text-4xl" />
         </Link>
-        {selectedRequest && <BookDetail request={selectedRequest} />}{" "}
-        {/* Pass selected request */}
+
+        {selectedOption === "TUTOR MATCHING" && selectedTutoringRequest && (
+          <BookDetail request={selectedTutoringRequest} />
+        )}
+
+        {selectedOption === "TUTOR" && selectedTutors && (
+          <TutorDetail tutor={selectedTutors} />
+        )}
       </section>
     </main>
   );

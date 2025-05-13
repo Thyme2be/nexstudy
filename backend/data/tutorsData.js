@@ -25,6 +25,15 @@ const tutorsData = [
     preferredDays: "Thursday-Saturday 7:00-14:00",
     cost: "150",
     subject: "CN200, EL105"
+  },
+  {
+    id: 4,
+    fullName: "Patipat Rungrueng",
+    nickname: "Guy",
+    grade: "Year 3",
+    preferredDays: "Monday 18:00-22:00, Wednesday 12.00-16.00",
+    cost: "150",
+    subject: "CN101"
   }
 ];
 

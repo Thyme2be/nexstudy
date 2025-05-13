@@ -1,4 +1,8 @@
 import loginData from "../data/loginData.js";
+import multer from "multer";
+
+// Configure multer to handle file uploads
+const upload = multer({ storage: multer.memoryStorage() });
 
 // Get all tutoring requests
 export const getAllRequests = (req, res) => {
@@ -7,6 +11,7 @@ export const getAllRequests = (req, res) => {
 
 // For Register and save to loginDB
 export const createRequest = [
+  upload.any(), // Middleware to handle multipart/form-data
   (req, res) => {
 
     try {

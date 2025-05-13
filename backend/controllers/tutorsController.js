@@ -7,15 +7,23 @@ export const getAllRequests = (_, res) => {
 export const createRequest = [
   (req, res) => {
     try {
-      const { fullName, nickName, preferredDays, cost, subject } = req.body;
+      const { 
+        fullName, 
+        nickname,
+        grade, 
+        preferredDays, 
+        cost, 
+        subject 
+      } = req.body;
 
       const newRequest = {
-        id: tutors.length + 1,
+        id: tutorsData.length + 1,
         fullName: fullName,
-        nickName: nickName,
+        nickname: nickname,
+        grade: grade,
         preferredDays: preferredDays,
         cost: cost,
-        subject: subject,
+        subject: subject
       };
 
       tutorsData.push(newRequest);

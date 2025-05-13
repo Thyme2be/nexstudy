@@ -19,7 +19,7 @@ const tutoringData = [
     preferredTimes: "2025-06-05T10:00",
     budget: 300,
     numStudents: 2,
-    additionalNotes: "Need help with chemical table.",
+    additionalNotes: "none",
   },
 ];
 

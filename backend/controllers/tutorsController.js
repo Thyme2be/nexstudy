@@ -1,15 +1,10 @@
 import tutorsData from "./../data/tutorsData.js";
-import multer from "multer";
-
-// Configure multer to handle file uploads
-const upload = multer({ storage: multer.memoryStorage() });
 
 export const getAllRequests = (_, res) => {
   res.json(tutorsData);
 };
 
 export const createRequest = [
-  upload.any(), // Middleware to handle multipart/form-data
   (req, res) => {
     try {
       const { 

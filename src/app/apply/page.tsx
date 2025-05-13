@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [fullName, setFullName] = useState("");
-  const [nickName, setNickName] = useState("");
+  const [nickname, setNickname] = useState("");
   const [grade, setGrade] = useState("");
   const [preferredDays, setPreferredDays] = useState("");
   const [cost, setCost] = useState("");
@@ -19,7 +19,7 @@ export default function Page() {
 
     const tutorData = {
       fullName,
-      nickName,
+      nickname,
       grade,
       preferredDays,
       cost,
@@ -106,7 +106,7 @@ export default function Page() {
                 type="text"
                 placeholder="Nickname"
                 className=" pl-2 pr-4 py-3 border-2 border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 w-full"
-                onChange={(e) => setNickName(e.target.value)}
+                onChange={(e) => setNickname(e.target.value)}
               />
             </div>
             {/* Grade Field */}
